@@ -21,8 +21,8 @@ public final class QuickSorter {
     }
 
     private static void sort(int[] values, int low, int high, int depth, AlgorithmMetrics metrics) {
+        metrics.recursiveCall(depth);
         while (low < high) {
-            metrics.recursiveCall(depth);
             int pivotIndex = ThreadLocalRandom.current().nextInt(low, high + 1);
             int pivot = values[pivotIndex];
             int less = low;

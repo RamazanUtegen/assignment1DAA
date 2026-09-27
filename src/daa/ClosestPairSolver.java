@@ -42,59 +42,55 @@ public final class ClosestPairSolver {
         }
         IndexedPoint[] byY = byX.clone();
         Arrays.sort(byY, BY_Y);
-        IndexedPoint[] buffer = new IndexedPoint[points.length];
-        return solve(byX, byY, buffer, 0, points.length, 1, metrics);
+        return solve(byX, byY, 0, points.length, 1, metrics);
     }
 
-    private static ClosestPairResult solve(IndexedPoint[] byX, IndexedPoint[] byY,
-                                           IndexedPoint[] buffer, int low, int high,
+    private static ClosestPairResult solve(IndexedPoint[] byX, IndexedPoint[] byY, int low, int high,
                                            int depth, AlgorithmMetrics metrics) {
         metrics.recursiveCall(depth);
         int size = high - low;
         if (size <= BRUTE_FORCE_CUTOFF) {
-            return bruteForce(byY, low, high, metrics);
+            return bruteForce(byY, 0, byY.length, metrics);
         }
 
         int middle = low + size / 2;
         double middleX = byX[middle].point.x();
+        IndexedPoint[] leftByY = new IndexedPoint[middle - low];
+        IndexedPoint[] rightByY = new IndexedPoint[high - middle];
         int leftCount = 0;
-        for (int i = low; i < high; i++) {
+        int rightCount = 0;
+        for (int i = 0; i < byY.length; i++) {
             if (byY[i].rank < middle) {
-                buffer[low + leftCount++] = byY[i];
+                leftByY[leftCount++] = byY[i];
+            } else {
+                rightByY[rightCount++] = byY[i];
             }
         }
-        int leftEnd = low + leftCount;
-        int rightIndex = leftEnd;
-        for (int i = low; i < high; i++) {
-            if (byY[i].rank >= middle) {
-                buffer[rightIndex++] = byY[i];
-            }
-        }
-        System.arraycopy(buffer, low, byY, low, size);
 
-        ClosestPairResult left = solve(byX, byY, buffer, low, middle, depth + 1, metrics);
-        ClosestPairResult right = solve(byX, byY, buffer, middle, high, depth + 1, metrics);
+        ClosestPairResult left = solve(byX, leftByY, low, middle, depth + 1, metrics);
+        ClosestPairResult right = solve(byX, rightByY, middle, high, depth + 1, metrics);
         ClosestPairResult best = left.distance() <= right.distance() ? left : right;
         double bestSquared = best.distance() * best.distance();
 
+        IndexedPoint[] strip = new IndexedPoint[size];
         int stripCount = 0;
-        for (int i = low; i < high; i++) {
-            double dx = byY[i].point.x() - middleX;
+        for (IndexedPoint point : byY) {
+            double dx = point.point.x() - middleX;
             if (dx * dx < bestSquared) {
-                buffer[low + stripCount++] = byY[i];
+                strip[stripCount++] = point;
             }
         }
         for (int i = 0; i < stripCount; i++) {
             int limit = Math.min(i + 8, stripCount);
             for (int j = i + 1; j < limit; j++) {
-                double dy = buffer[low + j].point.y() - buffer[low + i].point.y();
+                double dy = strip[j].point.y() - strip[i].point.y();
                 if (dy * dy >= bestSquared) {
                     break;
                 }
                 metrics.comparison();
-                double distance = distance(buffer[low + i].point, buffer[low + j].point);
+                double distance = distance(strip[i].point, strip[j].point);
                 if (distance < best.distance()) {
-                    best = new ClosestPairResult(buffer[low + i].point, buffer[low + j].point, distance);
+                    best = new ClosestPairResult(strip[i].point, strip[j].point, distance);
                     bestSquared = distance * distance;
                 }
             }

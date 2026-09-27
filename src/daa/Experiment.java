@@ -11,6 +11,7 @@ import java.util.Random;
 
 public final class Experiment {
     private static final int[] SIZES = {500, 2000, 8000};
+    private static final int WARMUP_RUNS = 2;
     private static final int TRIALS = 3;
     private static final String[] INPUT_TYPES = {"random", "sorted", "reverse_sorted", "duplicate_heavy"};
 
@@ -24,6 +25,7 @@ public final class Experiment {
                 "median_comparisons", "median_swaps", "median_recursive_calls"});
         StringBuilder console = new StringBuilder();
         console.append("Divide-and-Conquer Algorithm Experiment\n");
+        console.append("Warm-up runs per case: ").append(WARMUP_RUNS).append("\n");
         console.append("Trials per case: ").append(TRIALS).append("\n");
         console.append(String.format(Locale.ROOT, "%-24s %-16s %8s %14s %10s %14s %10s%n",
                 "Algorithm", "Input", "n", "Median ns", "Depth", "Comparisons", "Swaps"));
@@ -58,6 +60,14 @@ public final class Experiment {
         long[] swaps = new long[TRIALS];
         long[] calls = new long[TRIALS];
         long[] depths = new long[TRIALS];
+        for (int warmup = 0; warmup < WARMUP_RUNS; warmup++) {
+            int[] values = base.clone();
+            if (algorithm.equals("MergeSort")) {
+                MergeSorter.sort(values);
+            } else {
+                QuickSorter.sort(values);
+            }
+        }
         for (int trial = 0; trial < TRIALS; trial++) {
             int[] values = base.clone();
             AlgorithmMetrics metrics = new AlgorithmMetrics();
@@ -82,6 +92,9 @@ public final class Experiment {
         long[] swaps = new long[TRIALS];
         long[] calls = new long[TRIALS];
         long[] depths = new long[TRIALS];
+        for (int warmup = 0; warmup < WARMUP_RUNS; warmup++) {
+            DeterministicSelector.select(base.clone(), base.length / 2);
+        }
         for (int trial = 0; trial < TRIALS; trial++) {
             int[] values = base.clone();
             int expected = Arrays.stream(base).sorted().skip(base.length / 2).findFirst().orElseThrow();
@@ -106,6 +119,9 @@ public final class Experiment {
         long[] swaps = new long[TRIALS];
         long[] calls = new long[TRIALS];
         long[] depths = new long[TRIALS];
+        for (int warmup = 0; warmup < WARMUP_RUNS; warmup++) {
+            ClosestPairSolver.solve(points);
+        }
         for (int trial = 0; trial < TRIALS; trial++) {
             AlgorithmMetrics metrics = new AlgorithmMetrics();
             long start = System.nanoTime();

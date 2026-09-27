@@ -15,7 +15,9 @@ class ClosestPairSolverTest {
             for (int i = 0; i < points.length; i++) {
                 points[i] = new Point(random.nextInt(200) - 100, random.nextInt(200) - 100);
             }
-            assertEquals(bruteForce(points), ClosestPairSolver.solve(points).distance(), 1e-9);
+            double expected = bruteForce(points);
+            ClosestPairResult actual = ClosestPairSolver.solve(points);
+            assertEquals(expected, actual.distance(), 1e-9);
         }
     }
 
@@ -48,7 +50,10 @@ class ClosestPairSolverTest {
         double best = Double.POSITIVE_INFINITY;
         for (int i = 0; i < points.length; i++) {
             for (int j = i + 1; j < points.length; j++) {
-                best = Math.min(best, Math.hypot(points[i].x() - points[j].x(), points[i].y() - points[j].y()));
+                double distance = Math.hypot(points[i].x() - points[j].x(), points[i].y() - points[j].y());
+                if (distance < best) {
+                    best = distance;
+                }
             }
         }
         return best;
