@@ -1,0 +1,52 @@
+Divide-and-Conquer Algorithm Experiment
+Warm-up runs per case: 2
+Trials per case: 3
+Algorithm                Input                   n      Median ns      Depth    Comparisons      Swaps
+MergeSort                random                500         255399          6           4700       1852
+QuickSort                random                500         144600          6           7969       3680
+DeterministicSelect      random                500         110700          8           4420       3010
+ClosestPair              random                500        1220900          9            556          0
+MergeSort                sorted                500           3100          6            499          0
+QuickSort                sorted                500          88000          6           8051       2636
+DeterministicSelect      sorted                500          32800          8           3549       1967
+ClosestPair              sorted                500         429700          9            561          0
+MergeSort                reverse_sorted        500          49700          6           4931       3660
+QuickSort                reverse_sorted        500          68199          6           7671       2832
+DeterministicSelect      reverse_sorted        500          35599          8           4471       3401
+ClosestPair              reverse_sorted        500         450800          9            525          0
+MergeSort                duplicate_heavy       500          44999          6           4503       1682
+QuickSort                duplicate_heavy       500          23200          2           2633       1212
+DeterministicSelect      duplicate_heavy       500          73100          4           1891       1204
+ClosestPair              duplicate_heavy       500         631700          9            273          0
+MergeSort                random               2000         276399          8          22652       7214
+QuickSort                random               2000         337701          6          41155      17998
+DeterministicSelect      random               2000         146900         10          18584      12799
+ClosestPair              random               2000        4833699         11           2271          0
+MergeSort                sorted               2000          25500          8           1999          0
+QuickSort                sorted               2000         188499          7          37752      12504
+DeterministicSelect      sorted               2000          55100          9          14474       8267
+ClosestPair              sorted               2000        1378899         11           2277          0
+MergeSort                reverse_sorted       2000        1050900          8          21727      14640
+QuickSort                reverse_sorted       2000         272301          7          39391      14486
+DeterministicSelect      reverse_sorted       2000         519900         10          19463      14652
+ClosestPair              reverse_sorted       2000        1250600         11           2290          0
+MergeSort                duplicate_heavy      2000         587100          8          21745       6705
+QuickSort                duplicate_heavy      2000         202400          2          10851       4992
+DeterministicSelect      duplicate_heavy      2000         232200          5           7643       4852
+ClosestPair              duplicate_heavy      2000        1798700         11           1072          0
+MergeSort                random               8000         595900         10         107423      29659
+QuickSort                random               8000        1602599          8         185554      86760
+DeterministicSelect      random               8000        1113900         12          73991      50978
+ClosestPair              random               8000       11229500         13           9215          0
+MergeSort                sorted               8000          32499         10           7999          0
+QuickSort                sorted               8000        1099400          8         186709      63256
+DeterministicSelect      sorted               8000         544901         11          60754      35231
+ClosestPair              sorted               8000        3891700         13           9332          0
+MergeSort                reverse_sorted       8000         189500         10          94911      58560
+QuickSort                reverse_sorted       8000         371400          8         184535      66804
+DeterministicSelect      reverse_sorted       8000         667499         12          78904      59318
+ClosestPair              reverse_sorted       8000        4818199         13           9332          0
+MergeSort                duplicate_heavy      8000         234900         10         102055      26501
+QuickSort                duplicate_heavy      8000         117401          2          40691      18192
+DeterministicSelect      duplicate_heavy      8000         217100          6          30397      19091
+ClosestPair              duplicate_heavy      8000        5530000         13           4288          0
