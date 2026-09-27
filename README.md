@@ -108,9 +108,9 @@ The experimental environment was an AMD Ryzen 7 7840HS laptop with 16 GB RAM, Wi
 
 ## Reflection
 
-This assignment connects recurrence analysis with actual program behavior. Implementing and comparing the algorithms shows why a correct output alone does not explain performance: input structure, pivot selection, recursion depth, and data movement all matter.
+In this assignment, I learned how divide-and-conquer algorithms split a problem into smaller parts and combine their results. I also learned that algorithms can behave differently depending on the input, and that timing measurements can vary between runs.
 
-The main implementation challenge was maintaining the correct point order while splitting the Closest Pair problem by x-coordinate and checking the central strip by y-coordinate. Comparing the fast method with brute force helped catch and correct a partitioning error. Replace or edit this draft so it accurately describes your own work and learning.
+The most difficult part was keeping the points in the right order in the Closest Pair algorithm. Testing the algorithms against simpler reference methods helped me check that their answers were correct. This project helped me connect the theory of algorithm complexity with results from a real Java program.
 
 ## Screenshots
 
